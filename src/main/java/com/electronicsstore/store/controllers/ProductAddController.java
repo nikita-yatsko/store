@@ -1,23 +1,17 @@
 package com.electronicsstore.store.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
-import java.util.Map;
 
-import com.electronicsstore.store.models.Image;
 import com.electronicsstore.store.models.Product;
 import com.electronicsstore.store.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ProductAddController {
@@ -73,47 +67,18 @@ public class ProductAddController {
             @RequestParam String description,
             @RequestParam double price,
             @RequestParam double grade,
-            @RequestParam MultipartFile file,
             Model model) throws IOException {
-
-        Image image1;
-        Image image2;
-        Image image3;
-
-        if (file.getSize() != 0) {
-            image1 = toImageEntity(file);
-            image1.setPreviewImage(true);
-            Product product = new Product();
-            product.addImageToProduct(image1);
-        }
-
-
 
 
         // Создание и сохранение продукта
         Product product = new Product(type, name_model, description, processorModel, videoCardModel,
                 color, operationSystem, screen_resolution, ram_capacity, hddCapacity, sddCapacity,
-                batteryCapacity, "ddd", screen_technology, screen, price,
+                batteryCapacity, "---", screen_technology, screen, price,
                 launchDate, screenDiagonal, grade);
-
-        Product productFromDb = productRepository.save(product);
-        productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
 
         return "redirect:/main-admin";
     }
-
-    private Image toImageEntity(MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getName());
-        image.setOriginalFileName(file.getOriginalFilename());
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-
-        return image;
-    }
-
 
 }
 

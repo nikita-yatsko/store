@@ -178,21 +178,6 @@ public class Product {
         this.grade = grade;
     }
 
-    public Long getPreviewImageId() {
-        return previewImageId;
-    }
-
-    public void setPreviewImageId(Long previewImageId) {
-        this.previewImageId = previewImageId;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
 
     public Product() {}
 
@@ -218,17 +203,5 @@ public class Product {
         this.grade = grade;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Image> images = new ArrayList<>();
 
-
-
-
-    private Long  previewImageId;
-
-
-    public void addImageToProduct(Image image) {
-        image.setProduct(this);
-        images.add(image);
-    }
 }
