@@ -16,7 +16,7 @@
   <div class="row">
     <!-- Изображение товара -->
     <div class="col-md-6">
-      <img src="/images/test.png" alt="text" class="product-image">
+      <img th:src="@{/product/image/{id}(id=${product.id})}" th:alt="product.name_model" class="product-image">
     </div>
 
     <!-- Основная информация о товаре -->

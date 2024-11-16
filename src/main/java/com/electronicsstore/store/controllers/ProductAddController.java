@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ProductAddController {
@@ -67,13 +68,16 @@ public class ProductAddController {
             @RequestParam String description,
             @RequestParam double price,
             @RequestParam double grade,
+            @RequestParam MultipartFile image,
             Model model) throws IOException {
 
+
+        byte[] imageBytes = image.getBytes();
 
         // Создание и сохранение продукта
         Product product = new Product(type, name_model, description, processorModel, videoCardModel,
                 color, operationSystem, screen_resolution, ram_capacity, hddCapacity, sddCapacity,
-                batteryCapacity, "---", screen_technology, screen, price,
+                batteryCapacity, imageBytes, screen_technology, screen, price,
                 launchDate, screenDiagonal, grade);
         productRepository.save(product);
 

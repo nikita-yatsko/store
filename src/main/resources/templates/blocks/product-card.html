@@ -6,8 +6,7 @@
       <!-- Изображение-ссылка товара -->
       <a th:href="'/about-product/' + ${el.id}" class="card__image">
         <img
-                src="/images/test.png"
-                alt="текст"
+                th:src="@{/product/image/{id}(id=${el.id})}"
         />
       </a>
     </div>

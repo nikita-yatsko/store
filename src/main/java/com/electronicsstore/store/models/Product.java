@@ -12,8 +12,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Lob
+    private byte[] image;
+
     private String type, name_model, description, prosecc_model, video_card_model, color, operation_system, screen_resolution;
-    private String imageFilename, screen_technology, screen, hdd_capacity, sdd_capacity;
+    private String screen_technology, screen, hdd_capacity, sdd_capacity;
 
     private int ram_capacity, battery_capacity, launch_date;
     private double grade, screen_diagonal, price;
@@ -72,14 +75,6 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getImageFilename() {
-        return imageFilename;
-    }
-
-    public void setImageFilename(String path_to_Img) {
-        this.imageFilename = path_to_Img;
     }
 
     public String getType() {
@@ -178,10 +173,18 @@ public class Product {
         this.grade = grade;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
 
     public Product() {}
 
-    public Product(String type, String name_model, String description, String prosecc_model, String video_card_model, String color, String operation_system, String screen_resolution, int ram_capacity, String hdd_capacity, String sdd_capacity, int battery_capacity, String imageFilename, String screen_technology, String screen, double price, int launch_date, double screen_diagonal, double grade) {
+    public Product(String type, String name_model, String description, String prosecc_model, String video_card_model, String color, String operation_system, String screen_resolution, int ram_capacity, String hdd_capacity, String sdd_capacity, int battery_capacity, byte[] image, String screen_technology, String screen, double price, int launch_date, double screen_diagonal, double grade) {
         this.type = type;
         this.name_model = name_model;
         this.description = description;
@@ -194,13 +197,13 @@ public class Product {
         this.hdd_capacity = hdd_capacity;
         this.sdd_capacity = sdd_capacity;
         this.battery_capacity = battery_capacity;
-        this.imageFilename = imageFilename;
         this.screen_technology = screen_technology;
         this.screen = screen;
         this.price = price;
         this.launch_date = launch_date;
         this.screen_diagonal = screen_diagonal;
         this.grade = grade;
+        this.image = image;
     }
 
 
