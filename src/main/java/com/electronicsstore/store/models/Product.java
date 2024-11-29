@@ -1,6 +1,7 @@
 package com.electronicsstore.store.models;
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Entity
 public class Product {

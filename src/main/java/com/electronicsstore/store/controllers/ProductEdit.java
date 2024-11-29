@@ -41,62 +41,6 @@ public class ProductEdit {
         return "about-product-admin"; // Возвращаем имя шаблона
     }
 
-
-    /*@PostMapping("/main-admin/about-product-admiin/{id}")
-    public String updateProduct(
-            @PathVariable Long id,
-            @RequestParam String type,
-            @RequestParam String name_model,
-            @RequestParam int launchDate,
-            @RequestParam String processorModel,
-            @RequestParam String videoCardModel,
-            @RequestParam double screenDiagonal,
-            @RequestParam String screen_resolution,
-            @RequestParam String screen_technology,
-            @RequestParam String screen,
-            @RequestParam int ram_capacity,
-            @RequestParam String hddCapacity,
-            @RequestParam String sddCapacity,
-            @RequestParam int batteryCapacity,
-            @RequestParam String color,
-            @RequestParam String operationSystem,
-            @RequestParam String description,
-            @RequestParam double price,
-            @RequestParam double grade,
-            Model model) throws IOException {
-
-        // Найти продукт по идентификатору
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
-
-        // Обновление полей продукта
-        product.setType(type);
-        product.setNameModel(name_model);
-        product.setLaunchDate(launchDate);
-        product.setProcessorModel(processorModel);
-        product.setVideoCardModel(videoCardModel);
-        product.setScreenDiagonal(screenDiagonal);
-        product.setScreenResolution(screen_resolution);
-        product.setScreenTechnology(screen_technology);
-        product.setScreen(screen);
-        product.setRamCapacity(ram_capacity);
-        product.setHddCapacity(hddCapacity);
-        product.setSsdCapacity(sddCapacity);
-        product.setBatteryCapacity(batteryCapacity);
-        product.setColor(color);
-        product.setOperationSystem(operationSystem);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setGrade(grade);
-
-
-        // Сохранение обновленного продукта
-        productRepository.save(product);
-
-        return "redirect:/main-admin";
-    }*/
-
-
     @PostMapping("/main-admin/{id}/remove")
     public String productDelete(@PathVariable Long id, Model model){
         Product product = productRepository.findById(id).orElseThrow();

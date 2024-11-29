@@ -18,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ProductAddController {
+    private final ProductRepository productRepository;
+    private final ProductDataService productDataService;
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private ProductDataService productDataService;
+    public ProductAddController(ProductRepository pr, ProductDataService pds) {
+        this.productRepository = pr;
+        this.productDataService = pds;
+    }
 
     @GetMapping("/main-admin/product-add")
     public String productAdd(Model model) {
