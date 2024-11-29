@@ -1,4 +1,5 @@
 <!-- Карточка товара -->
+
 <div th:fragment="product-card">
   <div class="card">
     <!-- Верхняя часть -->
@@ -6,18 +7,16 @@
       <!-- Изображение-ссылка товара -->
       <a th:href="'/about-product/' + ${el.id}" class="card__image">
         <img
-                th:src="@{/product/image/{id}(id=${el.id})}"
-        />
+                th:src="@{/product/image/{id}(id=${el.id})}"/>
       </a>
     </div>
     <!-- Нижняя часть -->
     <div class="card__bottom">
-      <!-- Цены на товар (с учетом скидки и без)-->
       <div class="card__prices">
         <div class="card__price card__price--common" th:text="${el.price}"></div>
       </div>
       <!-- Ссылка-название товара -->
-      <a th:href="'/about-product/' + ${el.id}" class="card__title" th:text="${el.type} + ' ' + ${el.name_model} +  ' (' + ${el.color} + ')' "></a>
+      <a th:href="'/about-product/' + ${el.id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
       <!-- Кнопка добавить в корзину -->
       <button class="card__add">В корзину</button>
     </div>

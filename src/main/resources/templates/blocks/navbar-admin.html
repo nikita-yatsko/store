@@ -1,7 +1,7 @@
-<div th:fragment="navbar">
+<div th:fragment="navbar-admin">
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Electronics store</a>
+            <a class="navbar-brand" href="/main-admin">Electronics store</a>
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="/main-admin">Admin(временно)</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search" action="/sign-in">
+                <form class="d-flex" role="search">
                     <button class="btn btn-outline-success" type="submit">Вход</button>
                 </form>
             </div>

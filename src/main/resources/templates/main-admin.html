@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/style_main_windows.css">
 </head>
 <body>
-<header th:insert="~{blocks/navbar :: navbar}"></header>
+<header th:insert="~{blocks/navbar-admin :: navbar-admin}"></header>
 
 <section class="py-5 text-center container" style="max-height: 250px">
     <div class="row py-lg-5">
@@ -21,8 +21,8 @@
 
 <section class="cards">
     <div class="cantaner container_cards">
-        <div th:each="el : ${products}" th:insert="~{blocks/product-card :: product-card}" class="product-card"></div>
-        <div th:insert="~{blocks/product-card-admin :: product-card-admin}" class="product-card"></div>
+        <div th:each="el : ${products}" th:insert="~{blocks/product-card-admin-to-edit :: product-card-admin-to-edit}" class="product-card"></div>
+        <div th:insert="~{blocks/product-card-admin-to-add :: product-card-admin-to-add}" class="product-card"></div>
     </div>
 </section>
 

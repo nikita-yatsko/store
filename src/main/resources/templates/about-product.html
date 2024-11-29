@@ -9,35 +9,30 @@
 </head>
 <body>
 <header th:insert="~{blocks/navbar :: navbar}"></header>
-
-
 <div class="product-container">
   <!-- Основной блок товара -->
   <div class="row">
     <!-- Изображение товара -->
     <div class="col-md-6">
-      <img th:src="@{/product/image/{id}(id=${product.id})}" th:alt="product.name_model" class="product-image">
+      <img th:src="@{/product/image/{id}(id=${product.id})}" th:alt="product.nameModel" class="product-image">
     </div>
-
     <!-- Основная информация о товаре -->
     <div class="col-md-6">
-      <h1 th:text="${product.type} + ' ' + ${product.name_model}">dfdfd</h1>
-
+      <h1 th:text="${product.type} + ' ' + ${product.nameModel}"></h1>
       <!-- Вывод звезд как рейтинг товара -->
       <div class="product-rating">
         <span>Рейтинг:</span>
         <div class="stars">
-        <span th:each="i : ${#numbers.sequence(1, 5)}">
-            <!-- Полные звезды для целой части рейтинга -->
-            <i th:if="${i <= product.grade.intValue()}" class="fas fa-star"></i>
-          <!-- Половинка звезды, если текущая позиция — первая после целой части и рейтинг имеет дробную часть >= 0.5 -->
-            <i th:if="${i == product.grade.intValue() + 1 and product.grade % 1 >= 0.5}" class="fas fa-star-half-alt"></i>
-          <!-- Пустые звезды для оставшихся позиций -->
-            <i th:if="${i > product.grade.intValue() + (product.grade % 1 >= 0.5 ? 1 : 0)}" class="far fa-star"></i>
-        </span>
+    <span th:each="i : ${#numbers.sequence(1, 5)}">
+        <!-- Полные звезды для целой части рейтинга -->
+        <i th:if="${i <= product.grade.intValue()}" class="fas fa-star"></i>
+      <!-- Половинка звезды, если текущая позиция — первая после целой части и рейтинг имеет дробную часть >= 0.5 -->
+        <i th:if="${i == product.grade.intValue() + 1 and product.grade % 1 >= 0.5}" class="fas fa-star-half-alt"></i>
+      <!-- Пустые звезды для оставшихся позиций -->
+        <i th:if="${i > product.grade.intValue() + (product.grade % 1 >= 0.5 ? 1 : 0)}" class="far fa-star"></i>
+    </span>
         </div>
       </div>
-
 
       <div class="price" th:text="'Цена: ' + ${product.price} + ' BYN'"></div>
       <button class="btn btn-success btn-lg btn-buy">Добавить в корзину</button>
@@ -52,7 +47,6 @@
 
     </div>
   </div>
-
   <!-- Дополнительная информация о товаре -->
   <div class="product-details">
     <!-- Описание -->
@@ -60,34 +54,35 @@
       <h2>Описание</h2>
       <p th:text="${product.description}"></p>
     </div>
-
     <!-- Характеристики товара -->
     <div class="product-specs">
       <h2>Характеристики</h2>
       <table class="table">
         <tr>
-          <th>Дата выхода на рынок</th>
-          <td th:text="${product.launch_date}"></td>
+          <th >Дата выхода на рынок</th>
+          <td th:text="${product.launchDate}"></td>
         </tr>
+
         <tr>
           <th>Модель процессора</th>
-          <td th:text="${product.prosecc_model}"></td>
+          <td th:text="${product.processorModel}"></td>
         </tr>
         <tr>
           <th>Модель Видеокарты</th>
-          <td th:text="${product.video_card_model}"></td>
+          <td th:text="${product.videoCardModel}"></td>
         </tr>
+
         <tr>
           <th>Диагональ экрана</th>
-          <td th:text="${product.screen_diagonal}"></td>
+          <td th:text="${product.screenDiagonal}"></td>
         </tr>
         <tr>
           <th>Разрешение экрана</th>
-          <td th:text="${product.screen_resolution}"></td>
+          <td th:text="${product.screenResolution}"></td>
         </tr>
         <tr>
           <th>Технология экрана</th>
-          <td th:text="${product.screen_technology}"></td>
+          <td th:text="${product.screenTechnology}"></td>
         </tr>
         <tr>
           <th>Экран</th>
@@ -95,19 +90,19 @@
         </tr>
         <tr>
           <th>Объём оперативной памяти</th>
-          <td th:text="${product.ram_capacity}"></td>
+          <td th:text="${product.ramCapacity}"></td>
         </tr>
         <tr>
           <th>Ёмкость HDD</th>
-          <td th:text="${product.hdd_capacity}"></td>
+          <td th:text="${product.hddCapacity}"></td>
         </tr>
         <tr>
           <th>Емкость SSD</th>
-          <td th:text="${product.sdd_capacity}"></td>
+          <td th:text="${product.ssdCapacity}"></td>
         </tr>
         <tr>
           <th>Емкость аккумулятора</th>
-          <td th:text="${product.battery_capacity}"></td>
+          <td th:text="${product.batteryCapacity}"></td>
         </tr>
         <tr>
           <th>Цвет</th>
@@ -115,17 +110,15 @@
         </tr>
         <tr>
           <th>Операционная система</th>
-          <td th:text="${product.operation_system}"></td>
+          <td th:text="${product.operationSystem}"></td>
         </tr>
       </table>
     </div>
-
   </div>
 </div>
 
-
 <div th:insert="~{blocks/footer :: footer}"></div>
+
 </body>
 
 </html>
-

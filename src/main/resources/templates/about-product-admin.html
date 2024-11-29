@@ -1,25 +1,161 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Getting Started: Serving Web Content</title>
+  <title>Информация о товаре</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="../static/images/css/style.css">
+  <link rel="stylesheet" href="/css/style_about_product.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <header th:insert="~{blocks/navbar :: navbar}"></header>
 
-<section class="py-5 text-center container" style="max-height: 250px">
-  <div class="row py-lg-5">
-    <div class="col-lg-6 col-md-8 mx-auto">
-      <h1 class="fw-light">Карточка товара для администратора</h1>
-      <p class="lead text-body-secondary">В данной магазине вы сможете найти множество товаров, которые вам точно понравятся.</p>
+<div class="container product-container">
+  <div class="row">
+    <div class="col-md-6">
+      <img th:src="@{/product/image/{id}(id=${product.id})}" th:alt="${product.nameModel}" class="product-image img-fluid mb-4">
     </div>
   </div>
-</section>
+
+  <div class="product-details">
+    <h2>Характеристики</h2>
+    <form th:action="@{/product/update(id=${product.id})}" method="post">
+      <table class="table">
+        <tr>
+          <th><label>Тип</label></th>
+          <td>
+            <select id="types" name="type" class="form-select" required>
+              <option th:each="type : ${types}"
+                      th:value="${type}"
+                      th:text="${type}"
+                      th:selected="${type == product.type}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="nameModel">Название модели</label></th>
+          <td><input type="text" id="nameModel" name="nameModel" class="form-control" th:value="${product.nameModel}" required></td>
+        </tr>
+        <tr>
+          <th><label for="launchDate">Дата выхода на рынок</label></th>
+          <td><input type="number" id="launchDate" name="launchDate" class="form-control" th:value="${product.launchDate}" required></td>
+        </tr>
+        <tr>
+          <th><label for="processorModel">Модель процессора</label></th>
+          <td><input type="text" id="processorModel" name="processorModel" class="form-control" th:value="${product.processorModel}" required></td>
+        </tr>
+        <tr>
+          <th><label for="videoCardModel">Модель видеокарты</label></th>
+          <td><input type="text" id="videoCardModel" name="videoCardModel" class="form-control" th:value="${product.videoCardModel}" required></td>
+        </tr>
+        <tr>
+          <th><label for="screenDiagonal">Диагональ экрана</label></th>
+          <td><input type="number" id="screenDiagonal" name="screenDiagonal" step="0.1" class="form-control" th:value="${product.screenDiagonal}" required></td>
+        </tr>
+        <tr>
+          <th><label>Разрешение экрана</label></th>
+          <td>
+            <select id="screenResolutions" name="screenResolution" class="form-select" required>
+              <option th:each="screenResolution : ${screenResolutions}"
+                      th:value="${screenResolution}"
+                      th:text="${screenResolution}"
+                      th:selected="${screenResolution == product.screenResolution}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Технология экрана</label></th>
+          <td>
+            <select id="screenTechnologys" name="screenTechnology" class="form-select" required>
+              <option th:each="screenTechnology : ${screenTechnologys}"
+                      th:value="${screenTechnology}"
+                      th:text="${screenTechnology}"
+                      th:selected="${screenTechnology == product.screenTechnology}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Экран</label></th>
+          <td>
+            <select id="screens" name="screen" class="form-select" required>
+              <option th:each="screen : ${screens}"
+                      th:value="${screen}"
+                      th:text="${screen}"
+                      th:selected="${screen == product.screen}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Объём оперативной памяти</label></th>
+          <td>
+            <select id="ramCapacitys]" name="ram_capacity" class="form-select" required>
+              <option th:each="ramCapacity : ${ramCapacitys}"
+                      th:value="${ramCapacity}"
+                      th:text="${ramCapacity}"
+                      th:selected="${ramCapacity == product.ramCapacity}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Ёмкость HDD</label></th>
+          <td>
+            <select id="hddCapacitys" name="hddCapacity" class="form-select" required>
+              <option th:each="hddCapacity : ${hddCapacitys}"
+                      th:value="${hddCapacity}"
+                      th:text="${hddCapacity}"
+                      th:selected="${hddCapacity == product.hddCapacity}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Ёмкость SSD</label></th>
+          <td>
+            <select id="ssdCapacitys" name="ssdCapacity" class="form-select" required>
+              <option th:each="ssdCapacity : ${ssdCapacitys}"
+                      th:value="${ssdCapacity}"
+                      th:text="${ssdCapacity}"
+                      th:selected="${ssdCapacity == product.ssdCapacity}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="batteryCapacity">Емкость аккумулятора</label></th>
+          <td><input type="number" id="batteryCapacity" name="batteryCapacity" class="form-control" th:value="${product.batteryCapacity}" required></td>
+        </tr>
+        <tr>
+          <th><label for="color">Цвет</label></th>
+          <td><input type="text" id="color" name="color" class="form-control" th:value="${product.color}" required></td>
+        </tr>
+        <tr>
+          <th><label>Операционная система</label></th>
+          <td>
+            <select id="operationSystems" name="operationSystem" class="form-select" required>
+              <option th:each="operationSystem : ${operationSystems}"
+                      th:value="${operationSystem}"
+                      th:text="${operationSystem}"
+                      th:selected="${operationSystem == product.operationSystem}"></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="price">Цена</label></th>
+          <td><input type="number" id="price" name="price" step="0.01" class="form-control" th:value="${product.price}" required></td>
+        </tr>
+        <tr>
+          <th><label for="grade">Оценка товара</label></th>
+          <td><input type="number" id="grade" name="grade" class="form-control" th:value="${product.grade}" required></td>
+        </tr>
+        <tr>
+          <th><label for="description">Описание</label></th>
+          <td><textarea id="description" name="description" class="form-control" th:text="${product.description}"></textarea></td>
+        </tr>
+      </table>
+      <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+  </div>
+
+</div>
 
 <div th:insert="~{blocks/footer :: footer}"></div>
 </body>
-
 </html>
-

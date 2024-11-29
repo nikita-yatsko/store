@@ -1,28 +1,25 @@
 <!-- Карточка товара -->
-<div th:fragment="product-card-admin">
+
+<div th:fragment="product-card-admin-to-add">
   <div class="card">
     <!-- Верхняя часть -->
     <div class="card__top">
       <!-- Изображение-ссылка товара -->
       <a href="/main-admin/product-add" class="card__image">
         <img
-                src="images/test.png"
-                alt="Вставьте картинку"
-        />
+                src="images/add_image.png"
+                alt="Вставьте картинку"/>
       </a>
     </div>
     <!-- Нижняя часть -->
     <div class="card__bottom">
-      <!-- Цены на товар (с учетом скидки и без)-->
       <div class="card__prices">
-        <div class="card__price card__price--common">150 000</div>
+        <div class="card__price card__price--common">x xxx</div>
       </div>
       <!-- Ссылка-название товара -->
-      <a href="/main-admin/product-add" class="card__title">
-        Смартфон Apple IPhone 14 Pro Max 256Gb
-      </a>
+      <a href="/main-admin/product-add" class="card__title">Наименование товара Производитель Модель</a>
       <!-- Кнопка добавить в корзину -->
-      <button class="card__add">В корзину</button>
+      <button class="card__add" onclick="window.location.href='/main-admin/product-add'">Добавить</button>
     </div>
   </div>
 </div>

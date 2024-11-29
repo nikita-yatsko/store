@@ -2,31 +2,40 @@ package com.electronicsstore.store.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 public class Product {
-
+    // поменять поля
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Lob
     private byte[] image;
+    private String type;
+    private String nameModel;
+    private String description;
+    private String processorModel;
+    private String videoCardModel;
+    private String operationSystem;
+    private String screenResolution;
+    private String color;
+    private String screenTechnology;
+    private String screen;
+    private String hddCapacity;
+    private String ssdCapacity;
+    private int ramCapacity;
+    private int batteryCapacity;
+    private int launchDate;
+    private double grade;
+    private double screenDiagonal;
+    private double price;
 
-    private String type, name_model, description, prosecc_model, video_card_model, color, operation_system, screen_resolution;
-    private String screen_technology, screen, hdd_capacity, sdd_capacity;
 
-    private int ram_capacity, battery_capacity, launch_date;
-    private double grade, screen_diagonal, price;
-
-    public String getScreen_technology() {
-        return screen_technology;
+    public String getScreenTechnology() {
+        return screenTechnology;
     }
 
-    public void setScreen_technology(String screen_technology) {
-        this.screen_technology = screen_technology;
+    public void setScreenTechnology(String screen_technology) {
+        this.screenTechnology = screen_technology;
     }
 
     public String getScreen() {
@@ -37,36 +46,36 @@ public class Product {
         this.screen = screen;
     }
 
-    public String getSdd_capacity() {
-        return sdd_capacity;
+    public String getSsdCapacity() {
+        return ssdCapacity;
     }
 
-    public void setSdd_capacity(String sdd_capacity) {
-        this.sdd_capacity = sdd_capacity;
+    public void setSsdCapacity(String sdd_capacity) {
+        this.ssdCapacity = sdd_capacity;
     }
 
-    public int getBattery_capacity() {
-        return battery_capacity;
+    public int getBatteryCapacity() {
+        return batteryCapacity;
     }
 
-    public void setBattery_capacity(int battery_capacity) {
-        this.battery_capacity = battery_capacity;
+    public void setBatteryCapacity(int battery_capacity) {
+        this.batteryCapacity = battery_capacity;
     }
 
-    public int getLaunch_date() {
-        return launch_date;
+    public int getLaunchDate() {
+        return launchDate;
     }
 
-    public void setLaunch_date(int launch_date) {
-        this.launch_date = launch_date;
+    public void setLaunchDate(int launch_date) {
+        this.launchDate = launch_date;
     }
 
-    public double getScreen_diagonal() {
-        return screen_diagonal;
+    public double getScreenDiagonal() {
+        return screenDiagonal;
     }
 
-    public void setScreen_diagonal(double screen_diagonal) {
-        this.screen_diagonal = screen_diagonal;
+    public void setScreenDiagonal(double screen_diagonal) {
+        this.screenDiagonal = screen_diagonal;
     }
 
     public Long getId() {
@@ -85,12 +94,12 @@ public class Product {
         this.type = type;
     }
 
-    public String getName_model() {
-        return name_model;
+    public String getNameModel() {
+        return nameModel;
     }
 
-    public void setName_model(String name_model) {
-        this.name_model = name_model;
+    public void setNameModel(String name_model) {
+        this.nameModel = name_model;
     }
 
     public String getDescription() {
@@ -101,20 +110,20 @@ public class Product {
         this.description = description;
     }
 
-    public String getProsecc_model() {
-        return prosecc_model;
+    public String getProcessorModel() {
+        return processorModel;
     }
 
-    public void setProsecc_model(String prosecc_model) {
-        this.prosecc_model = prosecc_model;
+    public void setProcessorModel(String prosecc_model) {
+        this.processorModel = prosecc_model;
     }
 
-    public String getVideo_card_model() {
-        return video_card_model;
+    public String getVideoCardModel() {
+        return videoCardModel;
     }
 
-    public void setVideo_card_model(String video_card_model) {
-        this.video_card_model = video_card_model;
+    public void setVideoCardModel(String video_card_model) {
+        this.videoCardModel = video_card_model;
     }
 
     public String getColor() {
@@ -125,36 +134,36 @@ public class Product {
         this.color = color;
     }
 
-    public String getOperation_system() {
-        return operation_system;
+    public String getOperationSystem() {
+        return operationSystem;
     }
 
-    public void setOperation_system(String operation_system) {
-        this.operation_system = operation_system;
+    public void setOperationSystem(String operation_system) {
+        this.operationSystem = operation_system;
     }
 
-    public String getScreen_resolution() {
-        return screen_resolution;
+    public String getScreenResolution() {
+        return screenResolution;
     }
 
-    public void setScreen_resolution(String screen_resolution) {
-        this.screen_resolution = screen_resolution;
+    public void setScreenResolution(String screen_resolution) {
+        this.screenResolution = screen_resolution;
     }
 
-    public int getRam_capacity() {
-        return ram_capacity;
+    public int getRamCapacity() {
+        return ramCapacity;
     }
 
-    public void setRam_capacity(int ram_capacity) {
-        this.ram_capacity = ram_capacity;
+    public void setRamCapacity(int ram_capacity) {
+        this.ramCapacity = ram_capacity;
     }
 
-    public String getHdd_capacity() {
-        return hdd_capacity;
+    public String getHddCapacity() {
+        return hddCapacity;
     }
 
-    public void setHdd_capacity(String hdd_capacity) {
-        this.hdd_capacity = hdd_capacity;
+    public void setHddCapacity(String hdd_capacity) {
+        this.hddCapacity = hdd_capacity;
     }
 
     public double getPrice() {
@@ -184,27 +193,26 @@ public class Product {
 
     public Product() {}
 
-    public Product(String type, String name_model, String description, String prosecc_model, String video_card_model, String color, String operation_system, String screen_resolution, int ram_capacity, String hdd_capacity, String sdd_capacity, int battery_capacity, byte[] image, String screen_technology, String screen, double price, int launch_date, double screen_diagonal, double grade) {
+
+    public Product(String type, String nameModel, String description, String processorModel, String videoCardModel, String color, String operationSystem, String screenResolution, int ramCapacity, String hddCapacity, String ssdCapacity, int batteryCapacity, byte[] image, String screenTechnology, String screen, double price, int launchDate, double screenDiagonal, double grade) {
         this.type = type;
-        this.name_model = name_model;
+        this.nameModel = nameModel;
         this.description = description;
-        this.prosecc_model = prosecc_model;
-        this.video_card_model = video_card_model;
+        this.processorModel = processorModel;
+        this.videoCardModel = videoCardModel;
         this.color = color;
-        this.operation_system = operation_system;
-        this.screen_resolution = screen_resolution;
-        this.ram_capacity = ram_capacity;
-        this.hdd_capacity = hdd_capacity;
-        this.sdd_capacity = sdd_capacity;
-        this.battery_capacity = battery_capacity;
-        this.screen_technology = screen_technology;
+        this.operationSystem = operationSystem;
+        this.screenResolution = screenResolution;
+        this.ramCapacity = ramCapacity;
+        this.hddCapacity = hddCapacity;
+        this.ssdCapacity = ssdCapacity;
+        this.batteryCapacity = batteryCapacity;
+        this.screenTechnology = screenTechnology;
         this.screen = screen;
         this.price = price;
-        this.launch_date = launch_date;
-        this.screen_diagonal = screen_diagonal;
+        this.launchDate = launchDate;
+        this.screenDiagonal = screenDiagonal;
         this.grade = grade;
         this.image = image;
     }
-
-
 }

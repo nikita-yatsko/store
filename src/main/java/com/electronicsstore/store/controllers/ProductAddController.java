@@ -6,10 +6,12 @@ import java.util.Arrays;
 
 import com.electronicsstore.store.models.Product;
 import com.electronicsstore.store.repo.ProductRepository;
+import com.electronicsstore.store.services.ProductDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,67 +22,31 @@ public class ProductAddController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductDataService productDataService;
+
     @GetMapping("/main-admin/product-add")
     public String productAdd(Model model) {
-        List<String> types = Arrays.asList("Ноутбук");
-        model.addAttribute("types", types);
-
-        List<String> screens = Arrays.asList("Серсорный", "Несенсорный");
-        model.addAttribute("screens", screens);
-
-        List<String> screen_resolutions = Arrays.asList("1600x900", "1920x1080", "1920x1200", "2560x1440", "2560x1600", "2880x1800");
-        model.addAttribute("screen_resolutions", screen_resolutions);
-
-        List<String> screen_technologys = Arrays.asList("IPS", "TN+Film", "OLED");
-        model.addAttribute("screen_technologys", screen_technologys);
-
-        List<String> ram_capacitys = Arrays.asList("8", "16", "32", "64");
-        model.addAttribute("ram_capacitys", ram_capacitys);
-
-        List<String> hddCapacitys = Arrays.asList("нет", "256", "512", "1024");
-        model.addAttribute("hddCapacitys", hddCapacitys);
-
-        List<String> sddCapacitys = Arrays.asList("нет", "256", "512", "1024");
-        model.addAttribute("sddCapacitys", sddCapacitys);
-
-        List<String> operationSystems = Arrays.asList("Linux", "Windows 10", "Windows 10 Pro", "Windows 11", "Windows 11 Pro", "без OC", "Mac OS");
-        model.addAttribute("operationSystems", operationSystems);
+        productDataService.populateProductData(model);
         return "product-add";
     }
 
     @PostMapping("/main-admin/product-add")
     public String productAddToDb(
-            @RequestParam String type,
-            @RequestParam String name_model,
-            @RequestParam int launchDate,
-            @RequestParam String processorModel,
-            @RequestParam String videoCardModel,
-            @RequestParam double screenDiagonal,
-            @RequestParam String screen_resolution,
-            @RequestParam String screen_technology,
-            @RequestParam String screen,
-            @RequestParam int ram_capacity,
-            @RequestParam String hddCapacity,
-            @RequestParam String sddCapacity,
-            @RequestParam int batteryCapacity,
-            @RequestParam String color,
-            @RequestParam String operationSystem,
-            @RequestParam String description,
-            @RequestParam double price,
-            @RequestParam double grade,
-            @RequestParam MultipartFile image,
+            @ModelAttribute Product product,
+            @RequestParam MultipartFile image_edit,
             Model model) throws IOException {
 
+        byte[] imageBytes = image_edit.getBytes();
+        product.setImage(imageBytes);
 
-        byte[] imageBytes = image.getBytes();
-
-        // Создание и сохранение продукта
-        Product product = new Product(type, name_model, description, processorModel, videoCardModel,
-                color, operationSystem, screen_resolution, ram_capacity, hddCapacity, sddCapacity,
-                batteryCapacity, imageBytes, screen_technology, screen, price,
-                launchDate, screenDiagonal, grade);
         productRepository.save(product);
+        return "redirect:/main-admin";
+    }
 
+    @PostMapping("/main-admin/product-add1")
+    public String productAdd(Product product){
+        productRepository.save(product);
         return "redirect:/main-admin";
     }
 

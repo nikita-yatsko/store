@@ -11,8 +11,3 @@ public class ElectronicsStoreApplication {
 
 }
 
-// то ду
-// jakarta и ещё что-то там
-//
-//
-//

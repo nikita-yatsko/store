@@ -1,0 +1,25 @@
+<!-- Карточка товара -->
+<div th:fragment="product-card-admin-to-edit">
+    <div class="card">
+        <!-- Верхняя часть -->
+        <div class="card__top">
+            <!-- Изображение-ссылка товара -->
+            <a th:href="'/main-admin/about-product-admin/' + ${el.id}" class="card__image">
+                <img th:src="@{/product/image/{id}(id=${el.id})}" alt="Изображение товара для ${el.name_model}"/>
+            </a>
+        </div>
+        <!-- Нижняя часть -->
+        <div class="card__bottom">
+            <!-- Цены на товар (с учетом скидки и без) -->
+            <div class="card__prices">
+                <div class="card__price card__price--common" th:text="${el.price}"></div>
+            </div>
+            <!-- Ссылка-название товара -->
+            <a th:href="'/main-admin/about-product-admin/' + ${el.id}" class="card__title"
+               th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')'"></a>
+            <form th:action="'/main-admin/' + ${el.id} + '/remove'" method="post" style="display:inline;">
+                <button class="card__add" type="submit">Удалить</button>
+            </form>
+        </div>
+    </div>
+</div>

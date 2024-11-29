@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -31,10 +30,9 @@ public class MainController {
 
     @GetMapping("/about-product/{id}")
     public String aboutProduct(@PathVariable(value = "id") long id, Model model){
-        Optional<Product> product = productRepository.findById(id);
-        ArrayList<Product> products = new ArrayList<>();
-        product.ifPresent(products::add);
-        model.addAttribute("product", product.get());
+        Optional<Product> productOptional = productRepository.findById(id);
+        Product product = productOptional.get(); // Извлекаем сам объект Product
+        model.addAttribute("product", product); // Добавляем в модель
         return "about-product";
     }
 
@@ -50,19 +48,6 @@ public class MainController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
-    /*@GetMapping("/about-product/{id}")
-    public String aboutProduct(@PathVariable(value = "id") long id, Model model) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isPresent()) {
-            model.addAttribute("product", productOptional.get());
-            return "about-product";
-        } else {
-            // Handle product not found case, e.g., redirect to main or show error page
-            return "redirect:/"; // Redirect to main page or handle error appropriately
-        }
-    }*/
 
 
 }
