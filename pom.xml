@@ -66,18 +66,18 @@
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
-<!--		for validation-->
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate</groupId>-->
-<!--			<artifactId>hibernate-validator</artifactId>-->
-<!--			<version>9.0.0.Beta3</version>-->
-<!--		</dependency>-->
 
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate</groupId>-->
-<!--			<artifactId>hibernate-core</artifactId>-->
-<!--			<version>6.6.3.Final</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.6.3.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>

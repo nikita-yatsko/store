@@ -1,8 +1,8 @@
 package com.store.models;
 
 import jakarta.persistence.*;
-//import jakarta.validation.constraints.NotEmpty;
-//import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -19,9 +19,9 @@ public class Product {
     @Column(name = "image")
     private byte[] image;
 
-//    @NotEmpty(message = "Type should not be empty")
-//    @Size(min = 2, max = 50, message = "Should be between 2 and 50 characters")
-//    @Column(name = "type")
+    @NotEmpty(message = "Type should not be empty")
+    @Size(min = 2, max = 50, message = "Should be between 2 and 50 characters")
+    @Column(name = "type")
     private String type;
 
     private String nameModel;
