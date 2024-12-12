@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Контроллер для управления продуктами в интернет-магазине.
@@ -45,7 +45,7 @@ public class MainController {
      * @return имя представления для главной страницы
      */
     @GetMapping("/")
-    public String main(Model model) {
+    public String mainMethod(Model model) {
         Iterable<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         logger.info("Отображение главной страницы с {} продуктами.", ((Collection<?>) products).size());
@@ -110,16 +110,18 @@ public class MainController {
             return "redirect:/sign-in"; // Если пользователь не авторизован, перенаправляем на страницу входа
         }
 
-        // Если корзина еще не инициализирована, создаем новую
-        if (user.getCart() == null) {
-            user.setCart(new ArrayList<>());
-        }
+//        // Если корзина еще не инициализирована, создаем новую
+//        Optional.ofNullable(user.getCart());
+//        if (user.getCart() == null) {
+//            user.setCart(new ArrayList<>());
+//        }
 
         // Добавляем товар в корзину, если его там нет
-        List<Long> cart = user.getCart();
-        if (!cart.contains(id)) {
-            cart.add(id);
-        }
+//        List<Product> cart = user.getCart();
+        user.addToCart(productRepository.findById(id).get());
+//        if (!cart.contains(id)) {
+//            cart.add(id);
+//        }
 
         // Сохраняем изменения пользователя
         userRepository.save(user);
@@ -141,18 +143,18 @@ public class MainController {
             return "redirect:/sign-in"; // Перенаправление на страницу входа, если пользователь не авторизован
         }
 
-        List<Long> cartItems = user.getCart(); // Получаем список ID товаров из корзины
-        List<Product> productsInCart = new ArrayList<>();
+       // List<Long> cartItems = user.getCart(); // Получаем список ID товаров из корзины
+        List<Product> cart = user.getCart();
+//        List<Product> productsInCart = new ArrayList<>();
 
-        // Получаем все товары, которые есть в корзине пользователя
-        for (Long productId : cartItems) {
-            Product product = productRepository.findById(productId).orElse(null);
-            if (product != null) {
-                productsInCart.add(product); // Добавляем товар в список
-            }
-        }
+//        // Получаем все товары, которые есть в корзине пользователя
+//        for (Product product : cart) {
+//            if (product != null) {
+//                productsInCart.add(product); // Добавляем товар в список
+//            }
+//        }
 
-        model.addAttribute("productsInCart", productsInCart);
+        model.addAttribute("productsInCart", cart);
 
 
         return "cart-list";

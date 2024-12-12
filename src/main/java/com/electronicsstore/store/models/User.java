@@ -1,70 +1,40 @@
 package com.electronicsstore.store.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    //todo refact id to product_id
     private Long id;
 
+    @Column(name = "username")
     private String username;
+
     private String password;
+
     private String roles;
 
-    private List<Long> cart = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> cart;
 
-    // Геттеры и сеттеры
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public List<Long> getCart() {
-        return cart;
-    }
-
-    public void setCart(List<Long> cart) {
-        this.cart = cart;
-    }
-
-    public void addToCart(Long productId) {
-        if (!cart.contains(productId)) {
-            cart.add(productId);
+    public void addToCart(Product product) {
+        if (product.getOwner() != null) {
+            product.getOwner().getCart().remove(product);
         }
+        product.setOwner(this);
     }
 
-    public void removeFromCart(Long productId) {
-        cart.remove(productId);
+    public void removeFromCart(Product product) {
+        if (this.cart.remove(product)) {
+            product.setOwner(null);
+        }
     }
 }
