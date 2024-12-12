@@ -95,9 +95,7 @@ public class Product {
         this.type = type;
     }
 
-    public String getNameModel() {
-        return nameModel;
-    }
+    public String getNameModel() { return nameModel; }
 
     public void setNameModel(String name_model) {
         this.nameModel = name_model;
