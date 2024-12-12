@@ -1,9 +1,9 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
-import com.electronicsstore.store.models.Product;
-import com.electronicsstore.store.models.User;
-import com.electronicsstore.store.repo.ProductRepository;
-import com.electronicsstore.store.repo.UserRepository;
+import com.store.models.Product;
+import com.store.models.User;
+import com.store.repo.ProductRepository;
+import com.store.repo.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Контроллер для управления продуктами в интернет-магазине.

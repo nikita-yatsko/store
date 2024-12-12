@@ -1,10 +1,9 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
-import com.electronicsstore.store.models.User;
-import com.electronicsstore.store.repo.UserRepository;
+import com.store.models.User;
+import com.store.repo.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

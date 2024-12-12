@@ -1,8 +1,8 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
 
-import com.electronicsstore.store.models.Product;
-import com.electronicsstore.store.repo.ProductRepository;
+import com.store.models.Product;
+import com.store.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

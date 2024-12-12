@@ -1,16 +1,13 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
 
-import com.electronicsstore.store.models.User;
-import com.electronicsstore.store.repo.UserRepository;
+import com.store.models.User;
+import com.store.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Collections;
 
 @Controller
 public class RegisterController {

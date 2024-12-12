@@ -1,4 +1,4 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
-package com.electronicsstore.store.services;
+package com.store.services;
 
-import com.electronicsstore.store.models.User;
-import com.electronicsstore.store.repo.UserRepository;
+import com.store.models.User;
+import com.store.repo.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

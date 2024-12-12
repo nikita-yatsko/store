@@ -1,4 +1,4 @@
-package com.electronicsstore.store.services;
+package com.store.services;
 
 import org.springframework.ui.Model;
 

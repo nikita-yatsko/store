@@ -1,12 +1,10 @@
-package com.electronicsstore.store.controllers;
+package com.store.controllers;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Arrays;
 
-import com.electronicsstore.store.models.Product;
-import com.electronicsstore.store.repo.ProductRepository;
-import com.electronicsstore.store.services.ProductDataService;
+import com.store.models.Product;
+import com.store.repo.ProductRepository;
+import com.store.services.ProductDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

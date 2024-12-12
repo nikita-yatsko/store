@@ -1,8 +1,8 @@
-package com.electronicsstore.store.config;
+package com.store.config;
 
-import com.electronicsstore.store.controllers.MainController;
-import com.electronicsstore.store.repo.UserRepository;
-import com.electronicsstore.store.services.CustomUserDetailsService;
+import com.store.controllers.MainController;
+import com.store.repo.UserRepository;
+import com.store.services.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

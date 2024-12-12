@@ -1,4 +1,4 @@
-package com.electronicsstore.store.models;
+package com.store.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
