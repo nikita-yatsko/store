@@ -1,7 +1,9 @@
 package com.electronicsstore.store.controllers;
 
 import com.electronicsstore.store.models.Product;
+import com.electronicsstore.store.models.User;
 import com.electronicsstore.store.repo.ProductRepository;
+import com.electronicsstore.store.repo.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Контроллер для управления продуктами в интернет-магазине.
@@ -23,10 +30,12 @@ public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public MainController(ProductRepository productRepository) {
+    public MainController(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -36,7 +45,7 @@ public class MainController {
      * @return имя представления для главной страницы
      */
     @GetMapping("/")
-    public String main(Model model) {
+    public String mainMethod(Model model) {
         Iterable<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         logger.info("Отображение главной страницы с {} продуктами.", ((Collection<?>) products).size());
@@ -88,5 +97,66 @@ public class MainController {
                     logger.warn("Продукт с ID {} не найден при запросе изображения.", id);
                     return ResponseEntity.notFound().build();
                 });
+    }
+
+    //###########################################################
+
+    @PostMapping("/add-item-to-cart/{id}")
+    public String addItemToCart(@PathVariable Long id, Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            return "redirect:/sign-in"; // Если пользователь не авторизован, перенаправляем на страницу входа
+        }
+
+//        // Если корзина еще не инициализирована, создаем новую
+//        Optional.ofNullable(user.getCart());
+//        if (user.getCart() == null) {
+//            user.setCart(new ArrayList<>());
+//        }
+
+        // Добавляем товар в корзину, если его там нет
+//        List<Product> cart = user.getCart();
+        user.addToCart(productRepository.findById(id).get());
+//        if (!cart.contains(id)) {
+//            cart.add(id);
+//        }
+
+        // Сохраняем изменения пользователя
+        userRepository.save(user);
+
+        // Логируем добавление товара
+        logger.info("В корзину пользователя {} добавлен товар с ID {}", user.getUsername(), id);
+
+        // Перенаправляем на главную страницу
+        return "redirect:/";
+    }
+
+    @GetMapping("/product-cart-list")
+    public String productCartList(Model model, Principal principal){
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            logger.info("Пользовтеля с таким именем не существует");
+            return "redirect:/sign-in"; // Перенаправление на страницу входа, если пользователь не авторизован
+        }
+
+       // List<Long> cartItems = user.getCart(); // Получаем список ID товаров из корзины
+        List<Product> cart = user.getCart();
+//        List<Product> productsInCart = new ArrayList<>();
+
+//        // Получаем все товары, которые есть в корзине пользователя
+//        for (Product product : cart) {
+//            if (product != null) {
+//                productsInCart.add(product); // Добавляем товар в список
+//            }
+//        }
+
+        model.addAttribute("productsInCart", cart);
+
+
+        return "cart-list";
     }
 }

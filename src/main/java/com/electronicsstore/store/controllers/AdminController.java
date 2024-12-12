@@ -22,5 +22,10 @@ public class AdminController {
         return "main-admin";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
 
 }

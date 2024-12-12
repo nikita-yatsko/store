@@ -18,7 +18,9 @@
       <!-- Ссылка-название товара -->
       <a th:href="'/about-product/' + ${el.id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
       <!-- Кнопка добавить в корзину -->
-      <button class="card__add">В корзину</button>
+      <form th:action="'/add-item-to-cart/' + ${el.id}" method="post" style="display:inline;">
+        <button class="card__add" type="submit">В корзину</button>
+      </form>
     </div>
   </div>
 </div>
