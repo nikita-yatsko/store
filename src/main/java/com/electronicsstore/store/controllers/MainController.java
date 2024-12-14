@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -38,6 +40,11 @@ public class MainController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/register")
+    public String Register(){
+        return "register";
+    }
+
     /**
      * Отображает главную страницу с перечнем всех продуктов.
      *
@@ -48,6 +55,12 @@ public class MainController {
     public String mainMethod(Model model) {
         Iterable<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
+
+
+
+        model.addAttribute("buttonText", "В корзину");
+        model.addAttribute("formActionPrefix", "/add-item-to-cart/");
+
         logger.info("Отображение главной страницы с {} продуктами.", ((Collection<?>) products).size());
         return "main";
     }
@@ -154,9 +167,35 @@ public class MainController {
 //            }
 //        }
 
+        double totalPrice = cart.stream().mapToDouble(Product::getPrice).sum(); // Инициализация переменной
+
+        // Увеличиваем цену на цену текущего товара
+
+        model.addAttribute("buttonText", "Удалить из корзины");
+        model.addAttribute("formActionPrefix", "/remove-from-cart/");
+        model.addAttribute("totalPrice", totalPrice);
+
+
         model.addAttribute("productsInCart", cart);
 
 
         return "cart-list";
     }
+
+    @PostMapping("/remove-from-cart/{id}")
+    public String removeFromCart(@PathVariable Long id, Principal principal){
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+
+        Optional<Product> productOptional = productRepository.findById(id);
+        Product product = productOptional.get();
+
+        user.removeFromCart(product);
+        userRepository.save(user);
+        logger.info("Продукт с индексом {} удалён из корзины", id);
+
+        return "redirect:/product-cart-list";
+    }
 }
+
+

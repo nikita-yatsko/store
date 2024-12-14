@@ -32,9 +32,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Отключение CSRF для упрощения работы с API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/about-product/**", "/register", "/css/**").permitAll()
+                        .requestMatchers("/", "/about-product/**", "/register", "/css/**", "/product/**").permitAll()
                         .requestMatchers("/afb").hasRole("USER")
-                        .requestMatchers("/main-admin").hasRole("ADMIN")
+                        .requestMatchers("/main-admin", "/main-admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

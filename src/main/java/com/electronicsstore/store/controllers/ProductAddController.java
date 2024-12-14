@@ -46,11 +46,11 @@ public class ProductAddController {
         return "redirect:/main-admin";
     }
 
-    @PostMapping("/main-admin/product-add1")
-    public String productAdd(Product product){
-        productRepository.save(product);
-        return "redirect:/main-admin";
-    }
+//    @PostMapping("/main-admin/product-add1")
+//    public String productAdd(Product product){
+//        productRepository.save(product);
+//        return "redirect:/main-admin";
+//    }
 
 }
 

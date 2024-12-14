@@ -41,7 +41,7 @@ public class ProductEdit {
         return "about-product-admin"; // Возвращаем имя шаблона
     }
 
-    @PostMapping("/main-admin/{id}/remove")
+    @PostMapping("/main-admin/remove/{id}")
     public String productDelete(@PathVariable Long id, Model model){
         Product product = productRepository.findById(id).orElseThrow();
         productRepository.delete(product);

@@ -1,0 +1,32 @@
+<!-- Карточка товара -->
+
+
+
+<div class="cart-item" th:fragment="card">
+  <div class="item-info">
+    <a th:href="'/about-product/' + ${el.product_id}">
+      <img th:src="@{/product/image/{id}(id=${el.product_id})}" alt="Товар">
+    </a>
+
+    <div>
+      <a th:href="'/about-product/' + ${el.product_id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
+    </div>
+
+  </div>
+  <div class="price" th:text="${el.price}"></div>
+
+  <!-- Кнопка удаления -->
+  <div class="remove-button" style="margin-top: 10px;">
+    <form th:action="@{/remove-from-cart/{id}(id=${el.product_id})}" method="post">
+      <button type="submit" style="
+          background-color: #d9534f;
+          color: #fff;
+          border: none;
+          padding: 8px 12px;
+          cursor: pointer;
+          border-radius: 4px;
+          font-size: 14px;
+      ">Удалить</button>
+    </form>
+  </div>
+</div>

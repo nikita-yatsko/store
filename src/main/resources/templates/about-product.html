@@ -14,7 +14,7 @@
   <div class="row">
     <!-- Изображение товара -->
     <div class="col-md-6">
-      <img th:src="@{/product/image/{id}(id=${product.id})}" th:alt="product.nameModel" class="product-image">
+      <img th:src="@{/product/image/{id}(id=${product.getProduct_id})}" th:alt="product.nameModel" class="product-image">
     </div>
     <!-- Основная информация о товаре -->
     <div class="col-md-6">
@@ -35,7 +35,11 @@
       </div>
 
       <div class="price" th:text="'Цена: ' + ${product.price} + ' BYN'"></div>
-      <button class="btn btn-success btn-lg btn-buy">Добавить в корзину</button>
+<!--      <button class="btn btn-success btn-lg btn-buy">Добавить в корзину</button>-->
+
+      <form th:action="@{/add-item-to-cart/{id}(id=${product.product_id})}" method="post">
+        <button class="btn btn-success btn-lg btn-buy" type="submit">Добавить в корзину</button>
+      </form>
 
       <!-- Информация о доставке -->
       <div class="delivery-info" style="margin-top: 15px;">
