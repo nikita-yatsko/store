@@ -38,7 +38,7 @@ public class ProductEdit {
             return "404"; // Или редирект на страницу со списком продуктов
         }
 
-        return "about-product-admin"; // Возвращаем имя шаблона
+        return "edit-product"; // Возвращаем имя шаблона
     }
 
     @PostMapping("/main-admin/remove/{id}")

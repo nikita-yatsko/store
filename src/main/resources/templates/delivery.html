@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформление заказа</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    button {
+      background-color: #ff4081;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #e7356f;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Данные для доставки</h2>
+  <form action="/cart-list/delivery/clear">
+    <label for="city">Населенный пункт</label>
+    <input type="text" id="city" name="city" placeholder="Введите город" required>
+
+    <label for="address">Улица, дом</label>
+    <input type="text" id="address" name="address" placeholder="Введите улицу и номер дома" required>
+
+    <div class="row">
+      <div>
+        <label for="entrance">Подъезд</label>
+        <input type="text" id="entrance" name="entrance" placeholder="Введите подъезд">
+      </div>
+      <div>
+        <label for="floor">Этаж</label>
+        <input type="text" id="floor" name="floor" placeholder="Введите этаж">
+      </div>
+      <div>
+        <label for="apartment">Квартира/офис</label>
+        <input type="text" id="apartment" name="apartment" placeholder="Введите квартиру/офис">
+      </div>
+    </div>
+
+    <label for="delivery-date">Дата доставки</label>
+    <input type="date" id="delivery-date" name="delivery-date" required>
+
+    <!-- Поле: Телефон для связи -->
+    <label for="phone">Телефон для связи</label>
+    <input type="tel" id="phone" name="phone" placeholder="+375 (29) 123-45-67"  required>
+
+
+    <label for="comment">Комментарий</label>
+    <textarea id="comment" name="comment" rows="3" placeholder="Дополнительная информация"></textarea>
+
+    <button type="submit">Продолжить</button>
+
+  </form>
+</div>
+</body>
+</html>

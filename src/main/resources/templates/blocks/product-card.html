@@ -5,7 +5,7 @@
     <!-- Верхняя часть -->
     <div class="card__top">
       <!-- Изображение-ссылка товара -->
-      <a th:href="'/about-product/' + ${el.product_id}" class="card__image">
+      <a th:href="${pathToLink} + ${el.product_id}" class="card__image">
         <img
                 th:src="@{/product/image/{id}(id=${el.product_id})}"/>
       </a>
@@ -16,7 +16,7 @@
         <div class="card__price card__price--common" th:text="${el.price}"></div>
       </div>
       <!-- Ссылка-название товара -->
-      <a th:href="'/about-product/' + ${el.product_id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
+      <a th:href="${pathToLink} + ${el.product_id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
       <!-- Кнопка -->
 
       <form th:action="${formActionPrefix} + ${el.product_id}" method="post" style="display:inline;">

@@ -40,10 +40,7 @@ public class MainController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/register")
-    public String Register(){
-        return "register";
-    }
+
 
     /**
      * Отображает главную страницу с перечнем всех продуктов.
@@ -57,9 +54,9 @@ public class MainController {
         model.addAttribute("products", products);
 
 
-
         model.addAttribute("buttonText", "В корзину");
         model.addAttribute("formActionPrefix", "/add-item-to-cart/");
+        model.addAttribute("pathToLink", "/about-product/");
 
         logger.info("Отображение главной страницы с {} продуктами.", ((Collection<?>) products).size());
         return "main";
@@ -156,24 +153,15 @@ public class MainController {
             return "redirect:/sign-in"; // Перенаправление на страницу входа, если пользователь не авторизован
         }
 
-       // List<Long> cartItems = user.getCart(); // Получаем список ID товаров из корзины
         List<Product> cart = user.getCart();
-//        List<Product> productsInCart = new ArrayList<>();
+        logger.info("Колличество товаров в корзине у пользователя {} равно {}", user.getUsername(), cart.size());
 
-//        // Получаем все товары, которые есть в корзине пользователя
-//        for (Product product : cart) {
-//            if (product != null) {
-//                productsInCart.add(product); // Добавляем товар в список
-//            }
-//        }
 
-        double totalPrice = cart.stream().mapToDouble(Product::getPrice).sum(); // Инициализация переменной
-
-        // Увеличиваем цену на цену текущего товара
 
         model.addAttribute("buttonText", "Удалить из корзины");
         model.addAttribute("formActionPrefix", "/remove-from-cart/");
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", cart.stream().mapToDouble(Product::getPrice).sum());
+        model.addAttribute("totalCount", cart.size());
 
 
         model.addAttribute("productsInCart", cart);
@@ -196,6 +184,63 @@ public class MainController {
 
         return "redirect:/product-cart-list";
     }
+
+    @GetMapping("/cart-list/delivery")
+    public String orderDelivery(){
+        return "delivery";
+    }
+
+    @GetMapping("/cart-list/delivery/clear")
+    public String clearOrderDelivery(Principal principal){
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+
+        List<Product> cart = user.getCart();
+        logger.info("Пользователь {} удалил {} товара(ов) из корзины", user.getUsername(), user.getCart().size());
+
+        for (Product product : cart) {
+            product.setOwner(null);
+        }
+        // Очистка корзины
+        cart.clear();
+        userRepository.save(user);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/user-window")
+    public String userWindow(Principal principal, Model model){
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("cartItemCount", user.getCart().size());
+
+        return "user-window";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    @GetMapping("/oplata")
+    public String olataWindow(){ return "oplata"; }
+
+    @GetMapping("/about")
+    public String aboutCompany(){ return "about-company"; }
+
+    @GetMapping("/contacts")
+    public String contacts(){ return "contacts"; }
+
+    @GetMapping("/about-delivery")
+    public String aboutDelivery(){ return "about-delivery"; }
+
+    @GetMapping("/bonus")
+    public String bonus(){ return "bonus"; }
+
+    @GetMapping("/register")
+    public String Register(){ return "register"; }
+
 }
 
 

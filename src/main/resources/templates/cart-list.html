@@ -136,17 +136,18 @@
       <div class="summary" >
         <h3>Итого</h3>
         <div class="total">
-          Товары — <span class="bold">1 шт.</span> <br>
-          <span class="bold" th:text="${totalPrice}"></span>
+          Товары — <span class="bold" th:text="${totalCount} + ' шт.'"></span> <br>
+          <span class="bold" th:text="${totalPrice} + ' BYN'"></span>
         </div>
         <div>Доставка курьером <span class="bold">Бесплатно</span></div>
-        <a href="#" class="order-button" style="margin-top:5px">Оформить заказ</a>
+        <a href="/cart-list/delivery" class="order-button" style="margin-top:5px">Оформить заказ</a>
       </div>
 
     </div>
   </div>
 </section>
 
+<div th:insert="~{blocks/footer :: footer}"></div>
 
 </body>
 

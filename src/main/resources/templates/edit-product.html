@@ -19,7 +19,7 @@
 
   <div class="product-details">
     <h2>Характеристики</h2>
-    <form th:action="@{/product/update(id=${product.getProduct_id})}" method="post">
+    <form th:action="@{/product/update/{id}(id=${product.getProduct_id})}" method="post">
       <table class="table">
         <tr>
           <th><label>Тип</label></th>
