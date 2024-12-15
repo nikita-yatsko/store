@@ -4,19 +4,21 @@ package com.electronicsstore.store.controllers;
 import com.electronicsstore.store.models.User;
 import com.electronicsstore.store.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 
 @Controller
 public class RegisterController {
-    @Autowired
-    private UserRepository userRepository; // Репозиторий для сохранения пользователей
 
+    private final UserRepository userRepository; // Репозиторий для сохранения пользователей
+
+    @Autowired
+    public RegisterController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     // Обрабатываем POST-запрос с формы регистрации
     @PostMapping("/register")

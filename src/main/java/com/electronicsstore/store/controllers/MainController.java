@@ -4,22 +4,17 @@ import com.electronicsstore.store.models.Product;
 import com.electronicsstore.store.models.User;
 import com.electronicsstore.store.repo.ProductRepository;
 import com.electronicsstore.store.repo.UserRepository;
+import com.electronicsstore.store.services.ProductDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -32,15 +27,15 @@ public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
     private final ProductRepository productRepository;
+    private final ProductDataService productDataService;
     private final UserRepository userRepository;
 
     @Autowired
-    public MainController(ProductRepository productRepository, UserRepository userRepository) {
+    public MainController(ProductRepository productRepository, UserRepository userRepository, ProductDataService productDataService) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.productDataService = productDataService;
     }
-
-
 
     /**
      * Отображает главную страницу с перечнем всех продуктов.
@@ -52,7 +47,6 @@ public class MainController {
     public String mainMethod(Model model) {
         Iterable<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
-
 
         model.addAttribute("buttonText", "В корзину");
         model.addAttribute("formActionPrefix", "/add-item-to-cart/");
@@ -109,8 +103,12 @@ public class MainController {
                 });
     }
 
-    //###########################################################
-
+    /**
+     * Принимает данные для добавления товара в корзину.
+     *
+     * @param id идентификатор продукта
+     * @return имя представления для главной страницы
+     */
     @PostMapping("/add-item-to-cart/{id}")
     public String addItemToCart(@PathVariable Long id, Principal principal) {
         String username = principal.getName();
@@ -119,30 +117,22 @@ public class MainController {
         if (user == null) {
             return "redirect:/sign-in"; // Если пользователь не авторизован, перенаправляем на страницу входа
         }
-
-//        // Если корзина еще не инициализирована, создаем новую
-//        Optional.ofNullable(user.getCart());
-//        if (user.getCart() == null) {
-//            user.setCart(new ArrayList<>());
-//        }
-
-        // Добавляем товар в корзину, если его там нет
-//        List<Product> cart = user.getCart();
         user.addToCart(productRepository.findById(id).get());
-//        if (!cart.contains(id)) {
-//            cart.add(id);
-//        }
-
         // Сохраняем изменения пользователя
         userRepository.save(user);
 
         // Логируем добавление товара
         logger.info("В корзину пользователя {} добавлен товар с ID {}", user.getUsername(), id);
-
-        // Перенаправляем на главную страницу
         return "redirect:/";
     }
 
+
+    /**
+     * Отображает страницу с добавленными в корзину товарами.
+     *
+     * @param model модель для передачи данных в представление
+     * @return имя представления для корзины
+     */
     @GetMapping("/product-cart-list")
     public String productCartList(Model model, Principal principal){
         String username = principal.getName();
@@ -156,20 +146,21 @@ public class MainController {
         List<Product> cart = user.getCart();
         logger.info("Колличество товаров в корзине у пользователя {} равно {}", user.getUsername(), cart.size());
 
-
-
         model.addAttribute("buttonText", "Удалить из корзины");
         model.addAttribute("formActionPrefix", "/remove-from-cart/");
         model.addAttribute("totalPrice", cart.stream().mapToDouble(Product::getPrice).sum());
         model.addAttribute("totalCount", cart.size());
-
-
         model.addAttribute("productsInCart", cart);
-
 
         return "cart-list";
     }
 
+    /**
+     * Принимает данные для удаления товара из корзины.
+     *
+     * @param id идентификатор продукта
+     * @return имя представления для страницы с добавленными товарами
+     */
     @PostMapping("/remove-from-cart/{id}")
     public String removeFromCart(@PathVariable Long id, Principal principal){
         String username = principal.getName();
@@ -186,10 +177,14 @@ public class MainController {
     }
 
     @GetMapping("/cart-list/delivery")
-    public String orderDelivery(){
-        return "delivery";
-    }
+    public String orderDelivery(){ return "delivery"; }
 
+    /**
+     * Очищает корзину после успешного оформления заказа.
+     *
+     * @param principal сущность пользователя
+     * @return имя представления для главной страницы
+     */
     @GetMapping("/cart-list/delivery/clear")
     public String clearOrderDelivery(Principal principal){
         String username = principal.getName();
@@ -208,6 +203,12 @@ public class MainController {
         return "redirect:/";
     }
 
+    /**
+     * Отображает страницу пользователя.
+     *
+     * @param model модель для передачи данных в прелставление.
+     * @return имя представления для страницы пользователя.
+     */
     @GetMapping("/user-window")
     public String userWindow(Principal principal, Model model){
         String username = principal.getName();
@@ -218,6 +219,66 @@ public class MainController {
 
         return "user-window";
     }
+
+    /**
+     * Принимает данные для добавления товара в корзину.
+     *
+     * @param model модель для передачи данных в представление
+     * @return имя представления для главной страницы администатора
+     */
+    @GetMapping("/main-admin")
+    public String mainAdmin(Model model) {
+        Iterable<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
+
+        model.addAttribute("pathToLink", "/main-admin/edit-product/");
+        model.addAttribute("buttonText", "Удалить");
+        model.addAttribute("formActionPrefix", "/main-admin/remove/");
+
+        return "main-admin";
+    }
+
+    /**
+     * Возвращает страницу администатора для редактирования товара.
+     *
+     * @param id идентификатор продукта
+     * @param model модель для передачи данных в представление
+     * @return имя представления для страницы редактирования
+     */
+    @GetMapping("/main-admin/edit-product/{id}")
+    public String editProductAdmin(@PathVariable Long id, Model model){
+        return productRepository.findById(id)
+                .map(product -> {
+                    model.addAttribute("product", product); // Добавляем продукт в модель
+                    productDataService.populateProductData(model);
+                    return "/edit-product";
+                })
+                .orElseGet(() -> {
+                    return "redirect:/main-admin"; // Перенаправляем на главную страницу, если продукт не найден
+                });
+    }
+
+    /**
+     * Принимает данные для изменеия характеристик товара.
+     *
+     * @param id идентификатор продукта
+     *  @param newProduct измененный продукт
+     * @return имя представления для главной страницы администатора
+     */
+    @PostMapping("/product/update/{id}")
+    public String updateProduct(@PathVariable Long id, Product newProduct){
+        Optional<Product> productOptional = productRepository.findById(id);
+        Product productOld = productOptional.get();
+        newProduct.setImage(productOld.getImage());
+
+        productRepository.save(newProduct);
+        productRepository.deleteById(id);
+
+        //logger.info("Был удален продукт с ID {} и вместо него добавлен продукт с ID", id, newProduct.getProduct_id());
+
+        return "redirect:/main-admin";
+    }
+
 
     @GetMapping("/login")
     public String login() {
@@ -242,5 +303,3 @@ public class MainController {
     public String Register(){ return "register"; }
 
 }
-
-

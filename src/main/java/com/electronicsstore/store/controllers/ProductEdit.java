@@ -1,6 +1,5 @@
 package com.electronicsstore.store.controllers;
 
-
 import java.util.Optional;
 
 import com.electronicsstore.store.models.Product;
@@ -13,17 +12,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
+/**
+ * Контроллер для редактирование существующих товаров.
+ */
 @Controller
 public class ProductEdit {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final ProductDataService productDataService;
 
     @Autowired
-    private ProductDataService productDataService;
+    public ProductEdit(ProductRepository pr, ProductDataService pds) {
+        this.productRepository = pr;
+        this.productDataService = pds;
+    }
 
+    /**
+     * Отображает страницу с подробной информацией о товаре.
+     *
+     * @param id идентификатор продукта
+     * @param model модель для передачи данных в представление
+     * @return имя представления для страницы педактирования товара.
+     */
     @GetMapping("/main-admin/about-product-admin/{id}")
     public String aboutProductAdminToEdit(@PathVariable Long id, Model model) {
         Optional<Product> productOptional = productRepository.findById(id);
@@ -41,17 +51,17 @@ public class ProductEdit {
         return "edit-product"; // Возвращаем имя шаблона
     }
 
+    /**
+     * Принимате данные для удаления товара.
+     *
+     * @param id идентификатор продукта
+     * @return имя представления для главной страницы администатора
+     */
     @PostMapping("/main-admin/remove/{id}")
-    public String productDelete(@PathVariable Long id, Model model){
+    public String productDelete(@PathVariable Long id){
         Product product = productRepository.findById(id).orElseThrow();
         productRepository.delete(product);
 
         return "redirect:/main-admin";
     }
-
-
 }
-
-
-
-
