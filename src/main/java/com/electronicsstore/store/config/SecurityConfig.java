@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Отключение CSRF для упрощения работы с API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/about-product/**", "/register", "/css/**", "/product/**").permitAll()
+                        .requestMatchers("/", "/about-product/**", "/register", "/css/**", "/images/**", "/product/**", "/store/**").permitAll()
                         .requestMatchers("/afb").hasRole("USER")
                         .requestMatchers("/main-admin", "/main-admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

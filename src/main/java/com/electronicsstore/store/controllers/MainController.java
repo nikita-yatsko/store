@@ -10,14 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Контроллер для управления продуктами в интернет-магазине.
@@ -46,8 +45,8 @@ public class MainController {
     @GetMapping("/")
     public String mainMethod(Model model) {
         Iterable<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
 
+        model.addAttribute("products", products);
         model.addAttribute("buttonText", "В корзину");
         model.addAttribute("formActionPrefix", "/add-item-to-cart/");
         model.addAttribute("pathToLink", "/about-product/");
@@ -55,6 +54,7 @@ public class MainController {
         logger.info("Отображение главной страницы с {} продуктами.", ((Collection<?>) products).size());
         return "main";
     }
+
 
     /**
      * Отображает страницу о продукте по его ID.
@@ -176,8 +176,6 @@ public class MainController {
         return "redirect:/product-cart-list";
     }
 
-    @GetMapping("/cart-list/delivery")
-    public String orderDelivery(){ return "delivery"; }
 
     /**
      * Очищает корзину после успешного оформления заказа.
@@ -220,43 +218,6 @@ public class MainController {
         return "user-window";
     }
 
-    /**
-     * Принимает данные для добавления товара в корзину.
-     *
-     * @param model модель для передачи данных в представление
-     * @return имя представления для главной страницы администатора
-     */
-    @GetMapping("/main-admin")
-    public String mainAdmin(Model model) {
-        Iterable<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
-
-        model.addAttribute("pathToLink", "/main-admin/edit-product/");
-        model.addAttribute("buttonText", "Удалить");
-        model.addAttribute("formActionPrefix", "/main-admin/remove/");
-
-        return "main-admin";
-    }
-
-    /**
-     * Возвращает страницу администатора для редактирования товара.
-     *
-     * @param id идентификатор продукта
-     * @param model модель для передачи данных в представление
-     * @return имя представления для страницы редактирования
-     */
-    @GetMapping("/main-admin/edit-product/{id}")
-    public String editProductAdmin(@PathVariable Long id, Model model){
-        return productRepository.findById(id)
-                .map(product -> {
-                    model.addAttribute("product", product); // Добавляем продукт в модель
-                    productDataService.populateProductData(model);
-                    return "/edit-product";
-                })
-                .orElseGet(() -> {
-                    return "redirect:/main-admin"; // Перенаправляем на главную страницу, если продукт не найден
-                });
-    }
 
     /**
      * Принимает данные для изменеия характеристик товара.
@@ -274,29 +235,37 @@ public class MainController {
         productRepository.save(newProduct);
         productRepository.deleteById(id);
 
-        //logger.info("Был удален продукт с ID {} и вместо него добавлен продукт с ID", id, newProduct.getProduct_id());
+        logger.info("Был удален продукт с ID {} и вместо него добавлен продукт с ID", id, newProduct.getProduct_id());
 
         return "redirect:/main-admin";
     }
 
+    /**
+     * Принимает данные для изменеия характеристик товара.
+
+     * @return имя представления для главной страницы администатора
+     */
+    @GetMapping("/cart-list/delivery")
+    public String orderDelivery(){ return "delivery"; }
 
     @GetMapping("/login")
     public String login() {
         return "login";
     }
-    @GetMapping("/oplata")
-    public String olataWindow(){ return "oplata"; }
 
-    @GetMapping("/about")
+    @GetMapping("/store/oplata")
+    public String oplataWindow(){ return "oplata"; }
+
+    @GetMapping("/store/about")
     public String aboutCompany(){ return "about-company"; }
 
-    @GetMapping("/contacts")
+    @GetMapping("/store/contacts")
     public String contacts(){ return "contacts"; }
 
-    @GetMapping("/about-delivery")
+    @GetMapping("/store/about-delivery")
     public String aboutDelivery(){ return "about-delivery"; }
 
-    @GetMapping("/bonus")
+    @GetMapping("/store/bonus")
     public String bonus(){ return "bonus"; }
 
     @GetMapping("/register")

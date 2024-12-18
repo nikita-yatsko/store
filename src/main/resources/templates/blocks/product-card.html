@@ -1,6 +1,6 @@
 <!-- Карточка товара -->
 
-<div th:fragment="product-card">
+<div th:fragment="product-card" xmlns:sec="http://www.w3.org/1999/xhtml">
   <div class="card">
     <!-- Верхняя часть -->
     <div class="card__top">
@@ -17,11 +17,26 @@
       </div>
       <!-- Ссылка-название товара -->
       <a th:href="${pathToLink} + ${el.product_id}" class="card__title" th:text="${el.type} + ' ' + ${el.nameModel} + ' (' + ${el.color} + ')' "></a>
-      <!-- Кнопка -->
 
+      <!-- Кнопка -->
       <form th:action="${formActionPrefix} + ${el.product_id}" method="post" style="display:inline;">
         <button class="card__add" type="submit" th:text="${buttonText}"></button>
       </form>
+
+<!--      <div sec:authorize="isAuthenticated()" >-->
+<!--        <div th:if="el.ownew == null">-->
+<!--          <form th:action="${formActionPrefix} + ${el.product_id}" method="post" style="display:inline;">-->
+<!--            <button class="card__add" type="submit">Товар уже в корзине</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div sec:authentication="principal.">-->
+<!--          <form th:action="${formActionPrefix} + ${el.product_id}" method="post" style="display:inline;">-->
+<!--            <button class="card__add" type="submit" th:text="${buttonText}"></button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
 
     </div>
   </div>

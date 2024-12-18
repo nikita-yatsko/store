@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <!-- Информация об администраторе -->
+  <h2 class="text-center mb-4">Панель администратора</h2>
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      Информация об администраторе
+    </div>
+    <div class="card-body">
+      <p><strong>Имя администратора:</strong> <span id="adminName" th:text="${adminName}"></span></p>
+      <p><strong>Пароль:</strong> <span id="adminPassword" th:text="${adminPassword}"></span></p>
+    </div>
+    <tr>
+      <form action="/logout">
+        <button class="btn btn-danger btn-sm">Выйти</button>
+      </form>
+    </tr>
+  </div>
+
+  <!-- Список пользователей -->
+  <h3 class="mb-3">Список пользователей</h3>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Имя пользователя</th>
+      <th>Роль</th>
+      <th>Действия</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody th:each="user : ${users}">
+    <tr>
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.username}"></td>
+      <td>
+        <div class="d-flex align-items-center">
+          <form action="/change-role" method="post" class="d-flex">
+            <input type="hidden" name="id" th:value="${user.id}" />
+
+            <!-- Выпадающий список для выбора роли -->
+            <select class="form-control role-select me-2" name="role">
+              <option value="USER" th:selected="${user.roles == 'USER'}">USER</option>
+              <option value="ADMIN" th:selected="${user.roles == 'ADMIN'}">ADMIN</option>
+            </select>
+
+            <!-- Кнопка изменения роли с меньшим размером и отступом справа -->
+            <button type="submit" class="btn btn-warning btn-sm" style="margin-left: 10px">Изменить роль</button>
+          </form>
+        </div>
+
+      </td>
+      <td>
+        <div class="d-flex">
+          <!-- Кнопка удаления -->
+          <form action="/delete-user" method="post" class="ml-2">
+            <input type="hidden" name="id" th:value="${user.id}" />
+            <button class="btn btn-danger btn-sm">Удалить</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+
+
+  </table>
+</div>
+
+
+</body>
+</html>
