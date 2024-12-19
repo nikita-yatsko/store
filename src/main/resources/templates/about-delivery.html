@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Доставка</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f8f8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      color: #004085;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 22px;
+      margin-top: 30px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul {
+      list-style: disc;
+      margin: 10px 20px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #004085;
+    }
+    .delivery-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .option {
+      flex: 1 1 300px;
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .option h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #333;
+    }
+    .option p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+<header th:insert="~{blocks/navbar :: navbar}"></header>
+
+<div class="container" style="margin-top: 80px">
+  <h1>Доставка товаров</h1>
+  <p>Мы предлагаем несколько вариантов доставки для вашего удобства. Выберите наиболее подходящий способ.</p>
+
+  <!-- Раздел 1 -->
+  <div class="section">
+    <h2>Способы доставки</h2>
+    <div class="delivery-options">
+      <div class="option">
+        <h3>Курьерская доставка</h3>
+        <p>Доставка по городу осуществляется нашими курьерами.</p>
+        <p><span class="highlight">Стоимость:</span> 5 BYN</p>
+        <p><span class="highlight">Срок:</span> в течение 1-2 дней</p>
+      </div>
+      <div class="option">
+        <h3>Самовывоз</h3>
+        <p>Заберите заказ в удобное время из наших пунктов выдачи.</p>
+        <p><span class="highlight">Стоимость:</span> бесплатно</p>
+        <p><span class="highlight">Срок:</span> от 1 дня</p>
+      </div>
+      <div class="option">
+        <h3>Доставка почтой</h3>
+        <p>Доставка по всей Беларуси через почтовые службы.</p>
+        <p><span class="highlight">Стоимость:</span> от 7 BYN</p>
+        <p><span class="highlight">Срок:</span> от 2 до 5 дней</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Раздел 2 -->
+  <div class="section">
+    <h2>Как оформить доставку?</h2>
+    <ul>
+      <li>Выберите товары и добавьте их в корзину.</li>
+      <li>Перейдите в корзину и выберите способ доставки.</li>
+      <li>Укажите адрес или выберите пункт самовывоза.</li>
+      <li>Подтвердите заказ и ожидайте доставку.</li>
+    </ul>
+  </div>
+
+  <!-- Раздел 3 -->
+  <div class="section">
+    <h2>Дополнительные условия</h2>
+    <p>Для заказов на сумму свыше <span class="highlight">100 BYN</span> курьерская доставка осуществляется <span class="highlight">бесплатно</span>.</p>
+    <p>Пожалуйста, убедитесь, что указали правильный номер телефона и адрес доставки.</p>
+  </div>
+</div>
+
+<div th:insert="~{blocks/footer :: footer}"></div>
+</body>
+</html>
+
+
+
+
+

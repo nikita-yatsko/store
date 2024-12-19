@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аккаунт</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .dropdown {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      padding: 30px 20px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+    .dropdown-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .dropdown-header .account-title {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .dropdown-header .user-email {
+      font-size: 16px;
+      color: #888;
+    }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      padding: 12px 5px;
+      color: #333;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .dropdown-item:hover {
+      background-color: #f5f5f5;
+    }
+    .dropdown-item img {
+      width: 24px;
+      margin-right: 10px;
+    }
+    .exit {
+      color: red;
+      font-weight: bold;
+    }
+    .item-count {
+      color: black;
+      font-size: 18px;
+      padding: 5px 10px;
+
+      display: inline-block;
+      min-width: 30px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="dropdown">
+  <div class="dropdown-header">
+    <div class="account-title">Аккаунт</div>
+    <div class="user-email" th:text="${userName}"></div>
+  </div>
+  <a href="/product-cart-list" class="dropdown-item">
+    <div>
+      <img src="https://img.icons8.com/ios-filled/50/000000/shopping-cart.png" alt="Корзина">
+      Корзина
+    </div>
+    <span class="item-count" th:text="${cartItemCount}">0</span>
+  </a>
+  <a href="/logout" class="dropdown-item exit">
+    <img src="https://img.icons8.com/ios-filled/50/000000/exit.png" alt="Выход">
+    Выйти
+  </a>
+</div>
+</body>
+</html>

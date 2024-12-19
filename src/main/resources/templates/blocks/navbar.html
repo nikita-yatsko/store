@@ -1,7 +1,8 @@
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Electronics store</a>
+            <a class="navbar-brand" th:unless="${#authorization.expression('hasRole(''ADMIN'')')}" href="/">Electronics store</a>
+            <a class="navbar-brand" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/main-admin">Electronics store</a>
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -9,27 +10,53 @@
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Акции</a>
+                        <a class="nav-link active" aria-current="page" href="/store/bonus">Бонусная программа</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Оплата</a>
+                        <a class="nav-link" href="/store/oplata">Оплата</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Доставка</a>
+                        <a class="nav-link" href="/store/about-delivery">Доставка</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Контакты</a>
+                        <a class="nav-link" href="/store/contacts">Контакты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/product-cart-list">О магазине(корзина)</a>
+                        <a class="nav-link" href="/store/about">О магазине</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/main-admin">Admin(временно)</a>
+                    <li class="nav-item" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="margin-left:300px">
+                        <a class="nav-link" href="/main-admin">АДМИНИСТРАТОР</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search" action="/login">
-                    <button class="btn btn-outline-success" type="submit">Вход</button>
-                </form>
+
+
+                <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex justify-content-start align-items-center">
+                    <a class="btn btn-outline-success me-2" href="/product-cart-list" style="position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0539 9.47368C12.6658 9.47368 13.2042 9.13921 13.4816 8.63342L16.1492 3.33895C16.4511 2.80053 16.0595 2.13158 15.4395 2.13158H4.43447L3.66763 0.5H1.31579C0.865241 0.5 0.5 0.865241 0.5 1.31579C0.5 1.76634 0.865242 2.13158 1.31579 2.13158H2.63158L5.56842 8.32342L4.36842 10.0921C3.77289 11.1853 4.35211 12.1316 5.59211 12.1316H13.75C14.2006 12.1316 14.5658 11.7663 14.5658 11.3158C14.5658 10.8652 14.2005 10.5 13.75 10.5H6L6.79211 9.47368H12.0539ZM5.20947 3.76316H14.0526L12.0539 7.84211H7.14289L5.20947 3.76316ZM8.75 14.5724C8.75 15.3608 8.11083 16 7.32237 16C6.53391 16 5.89474 15.3608 5.89474 14.5724C5.89474 13.7839 6.53391 13.1447 7.32237 13.1447C8.11083 13.1447 8.75 13.7839 8.75 14.5724ZM12.2171 16C13.0056 16 13.6447 15.3608 13.6447 14.5724C13.6447 13.7839 13.0056 13.1447 12.2171 13.1447C11.4287 13.1447 10.7895 13.7839 10.7895 14.5724C10.7895 15.3608 11.4287 16 12.2171 16Z"></path>
+                        </svg>
+                        Корзина
+                    </a>
+
+                    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <form role="search" action="/main-admin/user-window">
+                            <button class="btn btn-outline-success" type="submit">Аккаунт</button>
+                        </form>
+                    </div>
+                    <div th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <form role="search" action="/user-window">
+                            <button class="btn btn-outline-success" type="submit">Аккаунт</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <form class="d-flex" role="search" action="/login">
+                        <button class="btn btn-outline-success" type="submit">Вход</button>
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </nav>

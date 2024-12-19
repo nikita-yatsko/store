@@ -1,7 +1,6 @@
 package com.electronicsstore.store.config;
 
 import com.electronicsstore.store.controllers.MainController;
-import com.electronicsstore.store.repo.UserRepository;
 import com.electronicsstore.store.services.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,24 +16,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
-        this.userRepository = userRepository;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-
         http
                 .csrf(csrf -> csrf.disable()) // Отключение CSRF для упрощения работы с API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/about-product/**", "/register", "/css/**").permitAll()
+                        .requestMatchers("/", "/about-product/**", "/register", "/css/**", "/images/**", "/product/**", "/store/**").permitAll()
                         .requestMatchers("/afb").hasRole("USER")
-                        .requestMatchers("/main-admin").hasRole("ADMIN")
+                        .requestMatchers("/main-admin", "/main-admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

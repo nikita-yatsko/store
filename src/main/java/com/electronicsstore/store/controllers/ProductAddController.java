@@ -1,8 +1,6 @@
 package com.electronicsstore.store.controllers;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Arrays;
 
 import com.electronicsstore.store.models.Product;
 import com.electronicsstore.store.repo.ProductRepository;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Контроллер для добавления товара в БД.
+ */
 @Controller
 public class ProductAddController {
     private final ProductRepository productRepository;
@@ -27,12 +28,26 @@ public class ProductAddController {
         this.productDataService = pds;
     }
 
+    /**
+     * Возвращает имя пердставления стараницы для добавления нового товара.
+     *
+     * @param model модель для передачи данных в представление
+     * @return имя представления для странницы для добавлению товара
+     */
     @GetMapping("/main-admin/product-add")
     public String productAdd(Model model) {
         productDataService.populateProductData(model);
         return "product-add";
     }
 
+    /**
+     * Принимает данные для добавления товара в корзину.
+     *
+     * @param product продукт для добавления в БД
+     * @param image_edit изображение товара
+     * @param model модель для передачи данных в представление
+     * @return имя представления для главной страницы администатора
+     */
     @PostMapping("/main-admin/product-add")
     public String productAddToDb(
             @ModelAttribute Product product,
@@ -45,15 +60,4 @@ public class ProductAddController {
         productRepository.save(product);
         return "redirect:/main-admin";
     }
-
-    @PostMapping("/main-admin/product-add1")
-    public String productAdd(Product product){
-        productRepository.save(product);
-        return "redirect:/main-admin";
-    }
-
 }
-
-
-
-

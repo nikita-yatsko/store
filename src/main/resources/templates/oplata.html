@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оплата</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style_main_windows.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      color: #333;
+      font-size: 22px;
+    }
+    .section {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .section p {
+      margin-bottom: 10px;
+    }
+    .payment-methods {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .method {
+      flex: 1 1 30%;
+      margin: 10px;
+      text-align: center;
+    }
+    .method img {
+      width: 60px;
+      height: 60px;
+    }
+    .method p {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<header th:insert="~{blocks/navbar :: navbar}"></header>
+
+<!-- Основной контейнер -->
+<div class="container">
+  <!-- Описание раздела -->
+  <section class="section" style="margin-top: 80px;">
+    <h2>Как можно оплатить заказ?</h2>
+    <p>Мы предлагаем несколько удобных способов оплаты для вашего комфорта:</p>
+  </section>
+
+  <!-- Способы оплаты -->
+  <section class="section">
+    <div class="payment-methods">
+      <!-- Метод оплаты 1 -->
+      <div class="method">
+        <img src="/images/credit_card.png" alt="Банковская карта">
+        <p>Банковская карта</p>
+      </div>
+
+      <!-- Метод оплаты 2 -->
+      <div class="method">
+        <img src="https://img.icons8.com/color/96/paypal.png" alt="PayPal">
+        <p>PayPal</p>
+      </div>
+
+      <!-- Метод оплаты 3 -->
+      <div class="method">
+        <img src="https://img.icons8.com/color/96/cash.png" alt="Наличные">
+        <p>Наличные</p>
+      </div>
+
+      <!-- Метод оплаты 4 -->
+      <div class="method">
+        <img src="https://img.icons8.com/color/96/google-pay.png" alt="Google Pay">
+        <p>Google Pay</p>
+      </div>
+
+      <!-- Метод оплаты 5 -->
+      <div class="method">
+        <img src="https://img.icons8.com/color/96/apple-pay.png" alt="Apple Pay">
+        <p>Apple Pay</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Дополнительная информация -->
+  <section class="section">
+    <h2>Безопасность платежей</h2>
+    <p>Мы используем защищённые каналы связи для передачи информации, а также соответствуем международным стандартам безопасности при обработке платежей.</p>
+    <p>Все ваши данные надёжно защищены.</p>
+  </section>
+</div>
+
+<div th:insert="~{blocks/footer :: footer}"></div>
+
+</body>
+</html>
